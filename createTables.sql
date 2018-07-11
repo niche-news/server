@@ -1,0 +1,38 @@
+USE NicheNews;
+
+
+DROP TABLE IF EXISTS sources;
+DROP TABLE IF EXISTS articles;
+DROP TABLE IF EXISTS contributors;
+
+CREATE TABLE contributors(
+authorID INT NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
+firstName VARCHAR(20) NOT NULL,
+lastName VARCHAR(20) NOT NULL,
+image VARCHAR(50),
+bio TEXT NOT NULL,
+possition VARCHAR(20)
+);
+
+CREATE TABLE articles(
+articleID INT NOT NULL UNIQUE,
+title VARCHAR(100) NOT NULL,
+text LONGTEXT NOT NULL,
+image VARCHAR(50),
+upvotes INT DEFAULT 0,
+authorID INT,
+publishDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+articelDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+type VARCHAR(10),
+PRIMARY KEY (articleID),
+FOREIGN KEY (authorID) REFERENCES contributors(authorID)
+);
+
+CREATE TABLE sources(
+sourceNumber TINYINT,
+articleID INT NOT NULL,
+title VARCHAR(30) NOT NULL,
+source TEXT,
+PRIMARY KEY (articleID, sourceNumber),
+FOREIGN KEY (articleID) REFERENCES articles(articleID)
+)
