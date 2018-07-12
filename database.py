@@ -15,7 +15,7 @@ class database:
 		arr = []
 		#data = self.cursor.fetchall()
 		for (articleID, title, text, publishDate) in self.cursor:
-			print('id: ' + str(articleID) + " title: " + str(title) + " text: " + str(text) + " date: " + str(publishDate))
+			#print('id: ' + str(articleID) + " title: " + str(title) + " text: " + str(text) + " date: " + str(publishDate))
 			newArticle = Article(articleID, title, text, str(publishDate.date()))
 			arr.append(newArticle.toJSON())
 		#print(data)

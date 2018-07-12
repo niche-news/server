@@ -16,4 +16,6 @@ def getArticles():
 	return str(data)
 
 if __name__ == '__main__':
-	app.run(debug=True, port=55622)
+	app.run(debug=False, port='55622', host='0.0.0.0')
+
+#/bin/bash: :wq: command not found
