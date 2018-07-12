@@ -8,12 +8,14 @@ class database:
        		self.cursor = self.cnx.cursor()
 
 	def getAllArticles(self):
-		# self.cursor.execute("SET @J = json_object('title', title, 'text', text)")
-		#cursor.execute("SELECT @J FROM articles")
-		# cursor.execute("SELECT 'title', title, 'text', text FROM articles")
-		#cursor.execute("SELECT JSON_OBJECT ( KEY 'ID' IS articleID FORMAT JSON, KEY 'title' IS title FORMAT JSON, KEY 'text' IS text FORMAT JSON) 'articles'  FROM articles")
 		sqlCommand = "SELECT * FROM articles"
 		self.cursor.execute(sqlCommand)
+		arr = []
 		data = self.cursor.fetchall()
+		for (articleID, title, text, date) in self.cursor:
+			print('id: ' + str(articleID) + " title: " + str(title) + " text: " + str(text) + " date: " str(date))
+			#newArticle = Article(articleID, title, text, date)
+			# arr.append(newArticle.toJSON())
 		print(data)
 		return str(data)
+		# return arr

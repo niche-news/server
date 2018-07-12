@@ -22,7 +22,7 @@ text LONGTEXT NOT NULL,
 image VARCHAR(50),
 upvotes INT DEFAULT 0,
 authorID INT,
-publishDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+publishDate DATE NOT NULL,
 type VARCHAR(10),
 PRIMARY KEY (articleID),
 FOREIGN KEY (authorID) REFERENCES contributors(authorID)
