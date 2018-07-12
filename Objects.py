@@ -1,4 +1,8 @@
-import json
+import sys, os, json
+
+class JSONObject:
+	def toJSON(self):
+		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 class Article(object):
 
@@ -13,6 +17,14 @@ class Article(object):
 		self.type = ""
 		self.upvotes = 0
 
+	def updateWith(self, subTitle, imageLocation, upvotes, type):
+		self.subTitle = subTitle
+		self.imageLocation = imageLocation
+		self.type = type
+		self.upvotes = upvotes
+
+
+
 #	def __init__(self, articleID, title, subTitle, text, fName, lName, date, imageLocation, type, upvotes):
 #		self.__init__(articleID, title, text, date)
 #		self.subTitle = subTitle
@@ -21,5 +33,8 @@ class Article(object):
 #		self.type = type
 #		self.upvotes = upvotes
 
+	def test(self):
+		pass
+
 	def toJSON(self):
-	        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
