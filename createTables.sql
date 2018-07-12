@@ -1,6 +1,5 @@
 USE NicheNews;
 
-
 DROP TABLE IF EXISTS sources;
 DROP TABLE IF EXISTS articles;
 DROP TABLE IF EXISTS contributors;
@@ -35,4 +34,4 @@ title VARCHAR(30) NOT NULL,
 source TEXT,
 PRIMARY KEY (articleID, sourceNumber),
 FOREIGN KEY (articleID) REFERENCES articles(articleID)
-)
+);

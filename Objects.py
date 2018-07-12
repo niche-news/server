@@ -7,6 +7,11 @@ class Article(object):
 		self.title = title
 		self.text = text
 		self.date = date
+		self.subTitle = ""
+		self.authorName = ""
+		self.imageLocation = ""
+		self.type = ""
+		self.upvotes = 0
 
 #	def __init__(self, articleID, title, subTitle, text, fName, lName, date, imageLocation, type, upvotes):
 #		self.__init__(articleID, title, text, date)
