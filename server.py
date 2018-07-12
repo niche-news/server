@@ -13,7 +13,7 @@ def indexPage():
 @app.route('/getArticles', methods=['GET', 'POST'])
 def getArticles():
 	data = db.getAllArticles()
-	return data
+	return str(data)
 
 if __name__ == '__main__':
 	app.run(debug=True, port=55622)
