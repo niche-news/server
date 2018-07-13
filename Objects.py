@@ -15,7 +15,8 @@ class Article(object):
 		self.authorName = authorName
 		self.type = type
 		self.upvotes = upVotes
-		
+		self.images = []
+		self.sources = []
 
 	def test(self):
 		pass

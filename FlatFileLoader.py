@@ -20,7 +20,7 @@ def loadContributors():
 	lines = file.readlines()
 	curs.execute("ALTER TABLE contributors AUTO_INCREMENT=1")
 	for i in lines:
-		user = i.rsplit("\n", 1)[0].split(",")
+		user = i.rsplit("\n", 1)[0].split(";")
 		sqlStatment = "INSERT INTO contributors (firstName, lastName, possition, image, bio) VALUES ('" + str(user[0]) + "', '" + str(user[1]) + "', '" + str(user[2]) + "', '" + str(user[3]) + "', '" + "Hi my name is " + str(user[0]) + " " + str(user[1]) + "')"
 		curs.execute(sqlStatment)
 		cnx.commit()
@@ -49,9 +49,10 @@ def loadImages():
 	images = open("flatfiles/articleImages.txt", "r")
 	
 	for i in images.readlines():
-		inf = i.rsplit("\n", 1)[0].split(",")
+		inf = i.rsplit("\n", 1)[0].split(";")
 		sqlStatment = "INSERT INTO images (articleID, paragraph, image) VALUES ( " + inf[0] + ", " + inf[1] + ", '" + inf[2] + "')"
 		curs.execute(sqlStatment)
 		cnx.commit()
 
 reloadTheWholeDatabase()
+

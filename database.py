@@ -17,8 +17,6 @@ class database:
 		self.cursor.execute(sqlCommand)
 		for (articleID, title, subTitle, text, upvotes, authorID, publishDate, type, fName, lName) in self.cursor:
 			newArticle = Article(articleID, title, text, str(publishDate), str(fName) + " " + str(lName), subTitle, upvotes, type)
-			newArticle.images = []
-			newArticle.sources = []
 			dict.articles[articleID] = newArticle
 
 		imageSQLCommand = "SELECT a.articleID, i.paragraph, i.image FROM articles a INNER JOIN images i ON i.articleID = a.articleID" 
@@ -41,11 +39,32 @@ class database:
 		return dict.toJSON()
 
 	def getArticleWithID(self, id):
-		pass
-		# sqlCommand = "SELECT * FROM articles WHERE articleID = '" + id + "'"
-		# self.cursor.execute(sqlCommand)
+		sqlCommand = "SELECT a.*, c.firstName, c.lastName FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID WHERE a.articleID = " + str(id)
+		self.cursor.execute(sqlCommand)
+		
+		c = [0]
+		for a in self.cursor:
+			c = a
 
+		article =  Article(c[0], c[1], c[3], str(c[6]), str(c[8]) + " " + str(c[9]), c[2], c[4], c[7])
+		imageSQLCommand = "SELECT a.articleID, i.paragraph, i.image FROM articles a INNER JOIN images i ON i.articleID = a.articleID WHERE a.articleID = " + str(id)
+		self.cursor.execute(imageSQLCommand)
+		for (id, imgP, img) in self.cursor:
+			newImage = JSONObject()
+			newImage.image = img
+			newImage.imageParagraph = imgP
+			article.images.append(newImage)
+		
+		sourcesSQLCommand = "SELECT a.articleID, s.sourceNumber, s.title, s.source FROM articles a INNER JOIN sources s ON a.articleID = s.articleID WHERE a.articleID = " + str(id)
+		self.cursor.execute(sourcesSQLCommand)
+		for (id, sNum, sTitle, sSource) in self.cursor:
+			newSource = JSONObject()
+			newSource.sourceNumber = sNum
+			newSource.title = sTitle
+			newSource.link = sSource
+			article.sources.append(newSource)
 
-	def loadContributors(self):
-		pass
-		# FlatFileLoader.loadContributors()
+		jsonData = JSONObject()
+		jsonData.article = article
+		return jsonData.toJSON()
+
