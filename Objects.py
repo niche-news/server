@@ -6,14 +6,13 @@ class JSONObject:
 
 class Article(object):
 
-	def __init__(self, articleID, title, text, date, authorName, subTitle, image, upVotes, type):
+	def __init__(self, articleID, title, text, date, authorName, subTitle, upVotes, type):
 		self.articleID = articleID
 		self.title = title
 		self.text = text
 		self.date = date
 		self.subTitle = subTitle
 		self.authorName = authorName
-		self.image = image
 		self.type = type
 		self.upvotes = upVotes
 

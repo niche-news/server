@@ -15,8 +15,8 @@ class database:
 		self.cursor.execute(sqlCommand)
 		dict = JSONObject()
 		dict.articles = []
-		for (articleID, title, subTitle, text, image, upvotes, authorID, publishDate, type, fName, lName) in self.cursor:
-			newArticle = Article(articleID, title, text, str(publishDate), str(fName) + " " + str(lName), subTitle, image, upvotes, type)
+		for (articleID, title, subTitle, text, upvotes, authorID, publishDate, type, fName, lName) in self.cursor:
+			newArticle = Article(articleID, title, text, str(publishDate), str(fName) + " " + str(lName), subTitle, upvotes, type)
 			dict.articles.append(newArticle)
 		return dict.toJSON()
 

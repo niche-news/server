@@ -9,7 +9,7 @@ curs = cnx.cursor()
 def loadContributors():
 	file = open("flatfiles/contributors.txt", "r")
 	lines = file.readlines()
-	# curs.execute("DELETE FROM contributors")
+	curs.execute("DELETE FROM contributors")
 	curs.execute("ALTER TABLE contributors AUTO_INCREMENT=1")
 	for i in lines:
 		user = i.rsplit("\n", 1)[0].split(",")
@@ -20,7 +20,7 @@ def loadContributors():
 def loadArticles():
 	articleInfo = open("flatfiles/articleInfo.txt", "r")
 	articleTexts = open("flatfiles/articleText.txt", "r")
-	# curs.execute("DELETE FROM articles")
+	curs.execute("DELETE FROM articles")
 	curs.execute("ALTER TABLE articles AUTO_INCREMENT=1")
 	aiLines = articleInfo.readlines()
 	for i in aiLines:
@@ -32,14 +32,13 @@ def loadArticles():
 
 def loadSources():
 	sources = open("flatfiles/articleSources.txt", "r")
-	# curs.execute("DELETE FROM sources")
+	curs.execute("DELETE FROM sources")
 	for i in sources.readlines():
 		inf = i.rsplit("\n", 1)[0].split(";")
-		print(inf)
 		sqlStatment = "INSERT INTO sources (articleID, sourceNumber, title, source) VALUES (" + inf[0] + ", " + inf[1] + " ,'" + inf[2] + "', '" + inf[3] + "')"
 		curs.execute(sqlStatment)
 		cnx.commit()
 
-loadArticles()
-loadSources()
-loadContributors()
+#loadContributors()
+#loadArticles()
+#loadSources()
