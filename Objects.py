@@ -6,22 +6,16 @@ class JSONObject:
 
 class Article(object):
 
-	def __init__(self, articleID, title, text, date):
+	def __init__(self, articleID, title, text, date, authorName, subTitle, image, upVotes, type):
 		self.articleID = articleID
 		self.title = title
 		self.text = text
 		self.date = date
-		self.subTitle = ""
-		self.authorName = ""
-		self.imageLocation = ""
-		self.type = ""
-		self.upvotes = 0
-
-	def updateWith(self, subTitle, imageLocation, upvotes, type):
 		self.subTitle = subTitle
-		self.imageLocation = imageLocation
+		self.authorName = authorName
+		self.image = image
 		self.type = type
-		self.upvotes = upvotes
+		self.upvotes = upVotes
 
 
 

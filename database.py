@@ -11,13 +11,12 @@ class database:
        		self.cursor = self.cnx.cursor()
 
 	def getAllArticles(self):
-		sqlCommand = "SELECT * FROM articles"
+		sqlCommand = "SELECT a.*, c.firstName, c.lastName FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID"
 		self.cursor.execute(sqlCommand)
 		dict = JSONObject()
 		dict.articles = []
-		for (articleID, title, subTitle, text, image, upvotes, authorID, publishDate, type) in self.cursor:
-			newArticle = Article(articleID, title, text, str(publishDate))
-			newArticle.updateWith(subTitle, image, upvotes, type)
+		for (articleID, title, subTitle, text, image, upvotes, authorID, publishDate, type, fName, lName) in self.cursor:
+			newArticle = Article(articleID, title, text, str(publishDate), str(fName) + " " + str(lName), subTitle, image, upvotes, type)
 			dict.articles.append(newArticle)
 		return dict.toJSON()
 
@@ -27,4 +26,5 @@ class database:
 
 
 	def loadContributors(self):
-		FlatFileLoader.loadContributors()
+		pass
+		# FlatFileLoader.loadContributors()

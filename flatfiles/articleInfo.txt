@@ -1,0 +1,8 @@
+1;The Truth on Electric Car;Reasons not to buy an Electric Car;2;3;DATE '2018-06-04'
+2;The Criminal Injustice System: The Problem with Plea Bargaining;;2;8;DATE '2018-06-05'
+3;Time to Equalize the Draft - and the Army;;5;2;DATE '2018-06-06'
+4;How Much Power Really Lies with the President?;Disclaimer: This article mentions the 9/11 attacks and discusses military conflicts;1;1;DATE '2018-06-08'
+5;Tragedy Among Propaganda;Disclaimer: This article mentions sensitive topics such as the 9/11 attacks, the illuminati, and school violence. The ideas and opinions expressed in this article are not endorsed nor representative of the views of “Niche News”. The author does not claim any of these opinions to be fact, merely ideas worthy of consideration. This article was not designed to be offensive in any manner.;2;4;DATE '2018-06-15'
+6;Toys R BUST;;2;6;DATE '2018-06-15'
+7;Tibetan Independence;;2;3;DATE '2018-07-05'
+8;Anthony Kennedy to Retire at the Age of 81;;2;6;DATE '2018-07-05'
