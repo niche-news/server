@@ -17,4 +17,5 @@ def getArticles():
 
 if __name__ == '__main__':
 	app.run(debug=False, port='55622', host='0.0.0.0')
+	
 

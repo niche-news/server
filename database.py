@@ -1,5 +1,6 @@
 import mysql.connector
 import sys, os, json
+import FlatFileLoader
 from Objects import *
 from datetime import date
 
@@ -10,15 +11,20 @@ class database:
        		self.cursor = self.cnx.cursor()
 
 	def getAllArticles(self):
-		sqlCommand = "SELECT articleID, title, text, subTitle, publishDate, image, upvotes, type FROM articles"
+		sqlCommand = "SELECT * FROM articles"
 		self.cursor.execute(sqlCommand)
 		dict = JSONObject()
 		dict.articles = []
-		for (articleID, title, text, subTitle, publishDate, image, upvotes, type) in self.cursor:
+		for (articleID, title, subTitle, text, image, upvotes, authorID, publishDate, type) in self.cursor:
 			newArticle = Article(articleID, title, text, str(publishDate))
 			newArticle.updateWith(subTitle, image, upvotes, type)
 			dict.articles.append(newArticle)
 		return dict.toJSON()
 
-	def getArticleWith(self, id):
-		sqlCommand = "SELECT "
+	def getArticleWithID(self, id):
+		sqlCommand = "SELECT * FROM articles WHERE articleID = '" + id + "'"
+		# self.cursor.execute(sqlCommand)
+
+
+	def loadContributors(self):
+		FlatFileLoader.loadContributors()
