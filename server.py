@@ -22,12 +22,10 @@ def getArticleWithID(articleID):
 
 @app.route('/getArticle', methods=['POST'])
 def getArticleWithIDPostMethod():
-	print(request.form)
-	print(request.form.to_dict())
-	if 'lol' in request.form:
-		print(request.form['lol'])
-	data = db.getArticleWithID(request.form['id'])
-	return str(data)
+	if 'id' in request.form:
+		return(db.getArticleWithID(request.form['id']))
+	else:
+		return str(db.getAllArticles(False, ""))
 
 
 
@@ -40,6 +38,7 @@ def getArticleFromMonth(month):
 def getArticleFromMonthPostMethod():
 	data = db.getAllArticles(True, request.form['month'])
 	return str(data)
+
 
 
 @app.route('/getContributors', methods=['GET','POST'])
@@ -56,6 +55,7 @@ def getContributors():
 		else:
 			return str(db.getContributors("", ""))			
 
+
 @app.route('/getContributors/id/<int:id>')
 def getContributorsWithID(id):
 	return str(db.getContributors("authorID", id))
@@ -67,6 +67,8 @@ def getContributorsWithFirstName(firstName):
 @app.route('/getContributors/lastName/<lastName>')
 def getContributorsWithLastName(lastName):
 	return str(db.getContributors("lastName", lastName))
+
+
 
 if __name__ == '__main__':
 	app.run(debug=False, port='55622', host='0.0.0.0')
