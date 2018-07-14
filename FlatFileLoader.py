@@ -21,7 +21,10 @@ def loadContributors():
 	curs.execute("ALTER TABLE contributors AUTO_INCREMENT=1")
 	for i in lines:
 		user = i.rsplit("\n", 1)[0].split(";")
-		sqlStatment = "INSERT INTO contributors (firstName, lastName, possition, image, bio) VALUES ('" + str(user[0]) + "', '" + str(user[1]) + "', '" + str(user[2]) + "', '" + str(user[3]) + "', '" + "Hi my name is " + str(user[0]) + " " + str(user[1]) + "')"
+		bio = "Hi my name is " + str(user[0]) + " " + str(user[1])
+		if user[4] != '':
+			bio = user[4]
+		sqlStatment = "INSERT INTO contributors (firstName, lastName, possition, image, bio) VALUES ('" + str(user[0]) + "', '" + str(user[1]) + "', '" + str(user[2]) + "', '" + str(user[3]) + "', '" + bio + "')"
 		curs.execute(sqlStatment)
 		cnx.commit()
 
