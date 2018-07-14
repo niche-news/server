@@ -36,7 +36,7 @@ def getArticleFromMonth(month):
 	data = db.getAllArticles(True, month)
 	return str(data)
 
-@app.route('/getArticleFromMonth', methods=['POST'])
+@app.route('/getArticlesFromMonth', methods=['POST'])
 def getArticleFromMonthPostMethod():
 	data = db.getAllArticles(True, request.form['month'])
 	return str(data)
