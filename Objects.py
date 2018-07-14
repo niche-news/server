@@ -37,3 +37,18 @@ class Contributor(object):
 
 	def toJSON(self):
 		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+class Image(JSONObject):
+
+	def __init__(self, id, image):
+		self.articleID = id
+		self.image = image
+		self.paragraph = 0
+
+class Source(JSONObject):
+
+	def __init__(self, id, sourceNumber):#, title, link):
+		self.articleID = id
+		self.sourceNumber = sourceNumber
+		self.title = ''
+		self.link = ''

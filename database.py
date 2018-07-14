@@ -131,3 +131,14 @@ class database:
 		self.cnx.commit()
 		return self.getContributors("authorID", id)
 
+	def addImage(self, image):
+		sqlCommand = "INSERT INTO images (articleID, image, paragraph) VALUES (" + image.articleID + ", '" + image.image+ "', " + str(image.paragraph) + ")"
+		self.cursor.execute(sqlCommand)
+		self.cnx.commit()
+		return self.getArticleWithID(image.articleID)
+
+	def addSource(self, source):
+		sqlCommand = "INSERT INTO sources (articleID, sourceNumber, title, source) VALUES (" + str(source.articleID) + ", " + str(source.sourceNumber) + ", '" + source.title + "', '" + source.link + "')"
+		self.cursor.execute(sqlCommand)
+		self.cnx.commit()
+		return self.getArticleWithID(source.articleID)
