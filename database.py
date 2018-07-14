@@ -111,4 +111,23 @@ class database:
 
 		return jsonDict.toJSON()
 
+	def addArticle(self, a):
+		sqlCommand = "INSERT INTO articles (title, subTitle, text, authorID, upvotes, publishDate, type) VALUES ('" + a.title + "', '" + a.subTitle + "', '" + a.text + "', '" + a.authorName + "', " + str(a.upvotes) + ", " + str(a.date) + ", '" + a.type + "')"
+		self.cursor.execute(sqlCommand)
+		self.cnx.commit()
+		self.cursor.execute("SELECT articleID FROM articles WHERE title = '" + a.title + "'")
+		return self.cursor.fetchall()[0][0]
+
+	def addContributor(self, fName, lName, image, possition, bio):
+		sqlCommand = "INSERT INTO contributors (firstName, lastName, image, bio, possition) VALUES ('" + fName + "', '" + lName + "', '" + image + "', '" + possition + "', '" + bio + "')"
+		self.cursor.execute(sqlCommand)
+		self.cnx.commit()
+		self.cursor.execute("SELECT authorID FROM contributors WHERE firstName = '" + fName + "'")
+		return self.cursor.fetchall()[0][0]
+
+	def addBio(self, id, bio):
+		sqlCommand = "UPDATE contributors SET bio = '" + bio + "' WHERE authorID = " + str(id)
+		self.cursor.execute(sqlCommand)
+		self.cnx.commit()
+		return self.getContributors("authorID", id)
 

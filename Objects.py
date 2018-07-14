@@ -17,6 +17,10 @@ class Article(object):
 		self.upvotes = upVotes
 		self.images = []
 		self.sources = []
+	
+	@classmethod
+	def init(cls, title, text, authorID, publishDate):
+		return cls(0, title, text, publishDate, authorID, '', 0, '')
 
 	def toJSON(self):
 		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
