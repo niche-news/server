@@ -18,8 +18,18 @@ class Article(object):
 		self.images = []
 		self.sources = []
 
-	def test(self):
-		pass
+	def toJSON(self):
+		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+class Contributor(object):
+
+	def __init__(self, id, firstName, lastName, image, bio, possition):
+		self.id = id
+		self.nameFirst = firstName
+		self.nameLast = lastName
+		self.image = image
+		self.bio = bio
+		self.possition = possition
 
 	def toJSON(self):
 		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

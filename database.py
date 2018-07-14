@@ -10,8 +10,20 @@ class database:
         	self.cnx = mysql.connector.connect(user='nicheuser', password='nichepass', host='127.0.0.1', database='NicheNews')
        		self.cursor = self.cnx.cursor()
 
-	def getAllArticles(self):
-		sqlCommand = "SELECT a.*, c.firstName, c.lastName FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID"
+	def getAllArticles(self, withLimitation, month):
+		sqlCommand = ""
+		imageSQLCommand = ""
+		sourcesSQLCommand = ""
+
+		if withLimitation:
+			sqlCommand = "SELECT a.*, c.firstName, c.lastName FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID WHERE MONTH(a.publishDate) = " + str(month)
+			imageSQLCommand = "SELECT a.articleID, i.paragraph, i.image FROM articles a INNER JOIN images i ON i.articleID = a.articleID WHERE MONTH(a.publishDate) = " + str(month)
+			sourcesSQLCommand = "SELECT a.articleID, s.sourceNumber, s.title, s.source FROM articles a INNER JOIN sources s ON a.articleID = s.articleID WHERE MONTH(a.publishDate) = " + str(month)
+		else:
+			sqlCommand = "SELECT a.*, c.firstName, c.lastName FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID"
+			imageSQLCommand = "SELECT a.articleID, i.paragraph, i.image FROM articles a INNER JOIN images i ON i.articleID = a.articleID" 
+			sourcesSQLCommand = "SELECT a.articleID, s.sourceNumber, s.title, s.source FROM articles a INNER JOIN sources s ON a.articleID = s.articleID"
+
 		dict = JSONObject()
 		dict.articles = {}
 		self.cursor.execute(sqlCommand)
@@ -19,7 +31,6 @@ class database:
 			newArticle = Article(articleID, title, text, str(publishDate), str(fName) + " " + str(lName), subTitle, upvotes, type)
 			dict.articles[articleID] = newArticle
 
-		imageSQLCommand = "SELECT a.articleID, i.paragraph, i.image FROM articles a INNER JOIN images i ON i.articleID = a.articleID" 
 		self.cursor.execute(imageSQLCommand)
 		for (id, imgP, img) in self.cursor:
 			newImage = JSONObject()
@@ -27,7 +38,6 @@ class database:
 			newImage.imageParagraph = imgP
 			dict.articles[id].images.append(newImage)
 
-		sourcesSQLCommand = "SELECT a.articleID, s.sourceNumber, s.title, s.source FROM articles a INNER JOIN sources s ON a.articleID = s.articleID"
 		self.cursor.execute(sourcesSQLCommand)
 		for (id, sNum, sTitle, sSource) in self.cursor:
 			newSource = JSONObject()
@@ -42,11 +52,16 @@ class database:
 		sqlCommand = "SELECT a.*, c.firstName, c.lastName FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID WHERE a.articleID = " + str(id)
 		self.cursor.execute(sqlCommand)
 		
+		rows = self.cursor.fetchall()
+
+		if len(rows) == 0:
+			return "No Results"
+
 		c = [0]
-		for a in self.cursor:
+		for a in rows:
 			c = a
 
-		article =  Article(c[0], c[1], c[3], str(c[6]), str(c[8]) + " " + str(c[9]), c[2], c[4], c[7])
+		article = Article(c[0], c[1], c[3], str(c[6]), str(c[8]) + " " + str(c[9]), c[2], c[4], c[7])
 		imageSQLCommand = "SELECT a.articleID, i.paragraph, i.image FROM articles a INNER JOIN images i ON i.articleID = a.articleID WHERE a.articleID = " + str(id)
 		self.cursor.execute(imageSQLCommand)
 		for (id, imgP, img) in self.cursor:
@@ -67,4 +82,33 @@ class database:
 		jsonData = JSONObject()
 		jsonData.article = article
 		return jsonData.toJSON()
+
+	def getContributors(self, limit, id):
+		sqlCommand = ""
+		if limit == "":
+			sqlCommand = "SELECT * FROM contributors"	
+		else:
+			sqlCommand = "SELECT * FROM contributors WHERE " + limit + " = '" + str(id) + "'"
+
+		self.cursor.execute(sqlCommand)
+		rows = self.cursor.fetchall()
+		if len(rows) == 0:
+			return "No Results"
+
+		jsonDict = JSONObject()
+		jsonDict.contributors = []
+
+		c = [0]
+		for i in rows:
+			c = i
+			if limit == "":
+				contributor = Contributor(c[0], c[1], c[2], c[3], c[4], c[5])
+				jsonDict.contributors.append(contributor)
+
+		if limit != "":
+			contributor = Contributor(c[0], c[1], c[2], c[3], c[4], c[5])
+			jsonDict.contributors.append(contributor)
+
+		return jsonDict.toJSON()
+
 
