@@ -1,0 +1,65 @@
+INFO:werkzeug: * Running on http://0.0.0.0:55622/ (Press CTRL+C to quit)
+INFO:werkzeug:4.78.218.41 - - [15/Jul/2018 01:02:40] "GET /getContributors HTTP/1.1" 200 -
+INFO:werkzeug:50.234.129.83 - - [16/Jul/2018 21:12:29] "GET / HTTP/1.1" 200 -
+ERROR:flask.app:Exception on /getContributors [GET]
+Traceback (most recent call last):
+  File "/home/alden/.local/lib/python3.5/site-packages/mysql/connector/connection_cext.py", line 377, in cmd_query
+    raw_as_string=raw_as_string)
+_mysql_connector.MySQLInterfaceError: MySQL server has gone away
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alden/developer/python/NicheNews/server.py", line 51, in getContributors
+    return str(db.getContributors("", ""))
+  File "/home/alden/developer/python/NicheNews/database.py", line 93, in getContributors
+    self.cursor.execute(sqlCommand)
+  File "/home/alden/.local/lib/python3.5/site-packages/mysql/connector/cursor_cext.py", line 264, in execute
+    raw_as_string=self._raw_as_string)
+  File "/home/alden/.local/lib/python3.5/site-packages/mysql/connector/connection_cext.py", line 380, in cmd_query
+    sqlstate=exc.sqlstate)
+mysql.connector.errors.DatabaseError: 2006 (HY000): MySQL server has gone away
+INFO:werkzeug:50.234.129.83 - - [16/Jul/2018 21:12:31] "GET /getContributors HTTP/1.1" 500 -
+ERROR:flask.app:Exception on /getContributors [GET]
+Traceback (most recent call last):
+  File "/home/alden/.local/lib/python3.5/site-packages/mysql/connector/connection_cext.py", line 377, in cmd_query
+    raw_as_string=raw_as_string)
+_mysql_connector.MySQLInterfaceError: MySQL server has gone away
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alden/.local/lib/python3.5/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alden/developer/python/NicheNews/server.py", line 51, in getContributors
+    return str(db.getContributors("", ""))
+  File "/home/alden/developer/python/NicheNews/database.py", line 93, in getContributors
+    self.cursor.execute(sqlCommand)
+  File "/home/alden/.local/lib/python3.5/site-packages/mysql/connector/cursor_cext.py", line 264, in execute
+    raw_as_string=self._raw_as_string)
+  File "/home/alden/.local/lib/python3.5/site-packages/mysql/connector/connection_cext.py", line 380, in cmd_query
+    sqlstate=exc.sqlstate)
+mysql.connector.errors.DatabaseError: 2006 (HY000): MySQL server has gone away
+INFO:werkzeug:172.56.23.88 - - [16/Jul/2018 21:17:20] "GET /getContributors HTTP/1.1" 500 -
