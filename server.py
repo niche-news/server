@@ -1,5 +1,6 @@
 from flask import Flask, request
 from database import *
+import hashlib
 
 app = Flask(__name__)
 db = database()
@@ -7,6 +8,10 @@ db = database()
 import logging
 logging.basicConfig(filename='error.log',level=logging.DEBUG)
 open('error.log', 'w').close()
+
+def authenticate(passWord):
+	passwordFile = open('pass.txt', 'r')
+	return hashlib.sha256(passWord.encode()).hexdigest() == passwordFile.readline()
 
 @app.route('/')
 def indexPage():
@@ -75,6 +80,13 @@ def getContributorsWithLastName(lastName):
 @app.route('/uploadArticle', methods=['POST'])
 def uploadArticle():
 	f = request.form
+
+	if 'pass' not in f:
+		return "Please use the password"
+	
+	if not authenticate(f['pass']):
+		return "Incorrect Password"
+
 	if 'title' not in f or 'text' not in f or 'date' not in f or 'authorID' not in f:
 		return "Please make sure you have 'text', 'title', 'date', and 'authorID' as args optional: ('subTitle', 'type')"
 	article = Article.init(f['title'], f['text'], f['authorID'], f['date'])
@@ -88,6 +100,13 @@ def uploadArticle():
 @app.route('/addContributor', methods=['POST'])
 def addContributors():
 	f = request.form
+
+	if 'pass' not in f:
+		return "Please use the password"
+	
+	if not authenticate(f['pass']):
+		return "Incorrect Password"
+
 	if 'firstName' not in f or 'lastName' not in f or 'image' not in f or 'possition' not in f or 'bio' not in f:
 		return "Please make sure you have 'firstName', 'lastName', 'image', 'possition', and 'bio' as args"
 	return str(db.addContributor(f['firstName'], f['lastName'], f['image'], f['possition'], f['bio']))
@@ -95,6 +114,13 @@ def addContributors():
 @app.route('/addBio', methods=['POST'])
 def addBio():
 	f = request.form
+
+	if 'pass' not in f:
+		return "Please use the password"
+	
+	if not authenticate(f['pass']):
+		return "Incorrect Password"
+
 	if 'id' not in f or 'bio' not in f:
 		return "Please make sure you have 'id' and 'bio' as args"
 	return str(db.addBio(f['id'], f['bio']))
@@ -102,6 +128,13 @@ def addBio():
 @app.route('/addImage', methods=['POST'])
 def addImage():
 	f = request.form
+
+	if 'pass' not in f:
+		return "Please use the password"
+	
+	if not authenticate(f['pass']):
+		return "Incorrect Password"
+
 	if 'articleID' not in f or 'image' not in f:
 		return "Please make sure you have 'articleID' and 'image' as args optional: ('paragraph')"
 	image = Image(f['articleID'], f['image'])
@@ -112,6 +145,14 @@ def addImage():
 @app.route('/addSource', methods=['POST'])
 def addSource():
 	f = request.form
+
+	if 'pass' not in f:
+		return "Please use the password"
+	
+	if not authenticate(f['pass']):
+		return "Incorrect Password"
+
+		
 	if 'articleID' not in f or 'sourceNumber' not in f:
 		return "Please make sure you have 'articleID' and 'sourceNumber' as args with at least one of: ('title', 'link')"
 	source = Source(f['articleID'], f['sourceNumber'])

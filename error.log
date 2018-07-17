@@ -1,3 +1,9 @@
-INFO:werkzeug: * Running on http://0.0.0.0:55622/ (Press CTRL+C to quit)
-INFO:werkzeug:172.56.23.88 - - [16/Jul/2018 21:31:07] "GET /getContributors HTTP/1.1" 200 -
-INFO:werkzeug:172.56.23.88 - - [16/Jul/2018 21:31:17] "GET /getArticles HTTP/1.1" 200 -
+INFO:werkzeug: * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [16/Jul/2018 21:59:10] "POST /addBio HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Jul/2018 21:59:16] "POST /addBio HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Jul/2018 21:59:24] "POST /addBio HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Jul/2018 21:59:49] "POST /addBio HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Jul/2018 22:01:16] "POST /addBio HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Jul/2018 22:01:22] "POST /addBio HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Jul/2018 22:01:32] "POST /addBio HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [16/Jul/2018 22:01:42] "POST /addBio HTTP/1.1" 200 -
