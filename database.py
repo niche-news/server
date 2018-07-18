@@ -6,12 +6,12 @@ from datetime import date
 
 class database:
 
-	def connect():
+	def connect(self):
 		self.cnx = mysql.connector.connect(user='nicheuser', password='nichepass', host='127.0.0.1', database='NicheNews')
 		self.cursor = self.cnx.cursor()
 
 	def __init__(self):
-        self.connect()
+		self.connect()
 
 	def getAllArticles(self, withLimitation, month):
 		self.connect()
