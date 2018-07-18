@@ -6,11 +6,15 @@ from datetime import date
 
 class database:
 
+	def connect():
+		self.cnx = mysql.connector.connect(user='nicheuser', password='nichepass', host='127.0.0.1', database='NicheNews')
+       	self.cursor = self.cnx.cursor()
+
 	def __init__(self):
-        	self.cnx = mysql.connector.connect(user='nicheuser', password='nichepass', host='127.0.0.1', database='NicheNews')
-       		self.cursor = self.cnx.cursor()
+        self.connect()	
 
 	def getAllArticles(self, withLimitation, month):
+		self.connect()
 		sqlCommand = ""
 		imageSQLCommand = ""
 		sourcesSQLCommand = ""
@@ -49,6 +53,7 @@ class database:
 		return dict.toJSON()
 
 	def getArticleWithID(self, id):
+		self.connect()
 		sqlCommand = "SELECT a.*, c.firstName, c.lastName FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID WHERE a.articleID = " + str(id)
 		self.cursor.execute(sqlCommand)
 		
@@ -84,6 +89,7 @@ class database:
 		return jsonData.toJSON()
 
 	def getContributors(self, limit, id):
+		self.connect()
 		sqlCommand = ""
 		if limit == "":
 			sqlCommand = "SELECT * FROM contributors"	
@@ -112,6 +118,7 @@ class database:
 		return jsonDict.toJSON()
 
 	def addArticle(self, a):
+		self.connect()
 		sqlCommand = "INSERT INTO articles (title, subTitle, text, authorID, upvotes, publishDate, type) VALUES ('" + a.title + "', '" + a.subTitle + "', '" + a.text + "', '" + a.authorName + "', " + str(a.upvotes) + ", " + str(a.date) + ", '" + a.type + "')"
 		self.cursor.execute(sqlCommand)
 		self.cnx.commit()
@@ -119,6 +126,7 @@ class database:
 		return self.cursor.fetchall()[0][0]
 
 	def addContributor(self, fName, lName, image, possition, bio):
+		self.connect()
 		sqlCommand = "INSERT INTO contributors (firstName, lastName, image, bio, possition) VALUES ('" + fName + "', '" + lName + "', '" + image + "', '" + possition + "', '" + bio + "')"
 		self.cursor.execute(sqlCommand)
 		self.cnx.commit()
@@ -126,18 +134,21 @@ class database:
 		return self.cursor.fetchall()[0][0]
 
 	def addBio(self, id, bio):
+		self.connect()
 		sqlCommand = "UPDATE contributors SET bio = '" + bio + "' WHERE authorID = " + str(id)
 		self.cursor.execute(sqlCommand)
 		self.cnx.commit()
 		return self.getContributors("authorID", id)
 
 	def addImage(self, image):
+		self.connect()
 		sqlCommand = "INSERT INTO images (articleID, image, paragraph) VALUES (" + image.articleID + ", '" + image.image+ "', " + str(image.paragraph) + ")"
 		self.cursor.execute(sqlCommand)
 		self.cnx.commit()
 		return self.getArticleWithID(image.articleID)
 
 	def addSource(self, source):
+		self.connect()
 		sqlCommand = "INSERT INTO sources (articleID, sourceNumber, title, source) VALUES (" + str(source.articleID) + ", " + str(source.sourceNumber) + ", '" + source.title + "', '" + source.link + "')"
 		self.cursor.execute(sqlCommand)
 		self.cnx.commit()
