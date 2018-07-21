@@ -1,0 +1,65 @@
+Server: 72.79.54.70:55622
+
+opt: optional argument
+req: required argument
+
+
+Getting Articles:
+	Get Methods
+		/getArticles
+		/getArticle/id/<int>
+		/getArticles/month/<int>
+
+	Post Methods
+		/getArticle
+			opt: id: <int>
+			opt: month: <int>
+
+Getting Contributors:
+	Get Methods:
+		/getContributors
+		/getContributors/id/<int>
+		/getContributors/firstName/<str>
+		/getContributors/lastName/<str>
+		
+	Post Methods
+		/getContributors
+			opt: id <int>
+			opt: firstName <str>
+			opt: lastName <str>
+
+Uploading (Post Methods Only)
+	/uploadArticle
+		req: pass <str> (admin editing password)
+		req: title <str>
+		req: text <str>
+		req: date <str> (format: yyyy-mm-dd)
+		req: authorID <int>
+		opt: subTitle <str>
+		opt: type <str>
+
+	/addContributor
+		req: pass <str> (admin editing password)
+		req: firstName <str>
+		req: lastName <str>
+		req: image <str>
+		req: position <str>
+		
+	/addBio
+		req: pass <str> (admin editing password)
+		req: id <int>
+		req: bio <str>
+
+	/addImage
+		req: pass <str> (admin editing password)
+		req: articleID: <str>
+		req: image <str>
+		opt: paragraph <int> (defaults to 0: header image)
+
+	/addSource
+		req: pass <str> (admin editing password)
+		req: articleID <int>
+		req: sourceNumber <int>
+		At least one of the following:
+			link <str>
+			title <str>

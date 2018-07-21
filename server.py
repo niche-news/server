@@ -22,32 +22,24 @@ def getArticles():
 	data = db.getAllArticles(False, "")
 	return str(data)
 
-
-
 @app.route('/getArticle/id/<int:articleID>', methods=['GET'])
 def getArticleWithID(articleID):
 	data = db.getArticleWithID(articleID)
 	return str(data)
-
-@app.route('/getArticle', methods=['POST'])
-def getArticleWithIDPostMethod():
-	if 'id' in request.form:
-		return(db.getArticleWithID(request.form['id']))
-	else:
-		return str(db.getAllArticles(False, ""))
-
-
 
 @app.route('/getArticles/month/<int:month>', methods=['GET'])
 def getArticleFromMonth(month):
 	data = db.getAllArticles(True, month)
 	return str(data)
 
-@app.route('/getArticlesFromMonth', methods=['POST'])
-def getArticleFromMonthPostMethod():
-	data = db.getAllArticles(True, request.form['month'])
-	return str(data)
-
+@app.route('/getArticle', methods=['POST'])
+def getArticleWithIDPostMethod():
+	if 'id' in request.form:
+		return(db.getArticleWithID(request.form['id']))
+	elif 'month' in request.form:
+		return(db.getAllArticles(True, request.form['month']))
+	else:
+		return str(db.getAllArticles(False, ""))
 
 
 @app.route('/getContributors', methods=['GET','POST'])
@@ -107,9 +99,9 @@ def addContributors():
 	if not authenticate(f['pass']):
 		return "Incorrect Password"
 
-	if 'firstName' not in f or 'lastName' not in f or 'image' not in f or 'possition' not in f or 'bio' not in f:
-		return "Please make sure you have 'firstName', 'lastName', 'image', 'possition', and 'bio' as args"
-	return str(db.addContributor(f['firstName'], f['lastName'], f['image'], f['possition'], f['bio']))
+	if 'firstName' not in f or 'lastName' not in f or 'image' not in f or 'position' not in f:
+		return "Please make sure you have 'firstName', 'lastName', 'image', and 'position' as args"
+	return str(db.addContributor(f['firstName'], f['lastName'], f['image'], f['position']))
 
 @app.route('/addBio', methods=['POST'])
 def addBio():

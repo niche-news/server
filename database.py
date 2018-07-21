@@ -125,9 +125,9 @@ class database:
 		self.cursor.execute("SELECT articleID FROM articles WHERE title = '" + a.title + "'")
 		return self.cursor.fetchall()[0][0]
 
-	def addContributor(self, fName, lName, image, possition, bio):
+	def addContributor(self, fName, lName, image, possition):
 		self.connect()
-		sqlCommand = "INSERT INTO contributors (firstName, lastName, image, bio, possition) VALUES ('" + fName + "', '" + lName + "', '" + image + "', '" + possition + "', '" + bio + "')"
+		sqlCommand = "INSERT INTO contributors (firstName, lastName, image, possition) VALUES ('" + fName + "', '" + lName + "', '" + image + "', '" + possition + "')"
 		self.cursor.execute(sqlCommand)
 		self.cnx.commit()
 		self.cursor.execute("SELECT authorID FROM contributors WHERE firstName = '" + fName + "'")
