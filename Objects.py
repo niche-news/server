@@ -6,7 +6,7 @@ class JSONObject:
 
 class Article(object):
 
-	def __init__(self, articleID, title, text, date, authorName, subTitle, upVotes, type):
+	def __init__(self, articleID, title, text, date, authorName, subTitle, upVotes, type, authorID):
 		self.articleID = articleID
 		self.title = title
 		self.text = text
@@ -15,6 +15,7 @@ class Article(object):
 		self.authorName = authorName
 		self.type = type
 		self.upvotes = upVotes
+		self.authorID = authorID
 		self.images = []
 		self.sources = []
 	

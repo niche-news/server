@@ -9,11 +9,13 @@ Getting Articles:
 		/getArticles
 		/getArticle/id/<int>
 		/getArticles/month/<int>
+		/getArticles/authorID/<int>
 
 	Post Methods
 		/getArticle
 			opt: id: <int>
 			opt: month: <int>
+			opt: authorID: <int>
 
 Getting Contributors:
 	Get Methods:

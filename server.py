@@ -19,7 +19,7 @@ def indexPage():
 
 @app.route('/getArticles', methods=['GET'])
 def getArticles():
-	data = db.getAllArticles(False, "")
+	data = db.getAllArticles(False, "", "")
 	return str(data)
 
 @app.route('/getArticle/id/<int:articleID>', methods=['GET'])
@@ -29,7 +29,12 @@ def getArticleWithID(articleID):
 
 @app.route('/getArticles/month/<int:month>', methods=['GET'])
 def getArticleFromMonth(month):
-	data = db.getAllArticles(True, month)
+	data = db.getAllArticles(True, "MONTH(a.publishDate)", month)
+	return str(data)
+
+@app.route('/getArticles/authorID/<int:id>', methods=['GET'])
+def getArticleWithAuthorID(id):
+	data = db.getAllArticles(True, "a.authorID", id)
 	return str(data)
 
 @app.route('/getArticle', methods=['POST'])
@@ -37,9 +42,11 @@ def getArticleWithIDPostMethod():
 	if 'id' in request.form:
 		return(db.getArticleWithID(request.form['id']))
 	elif 'month' in request.form:
-		return(db.getAllArticles(True, request.form['month']))
+		return(db.getAllArticles(True, "MONTH(a.publishDate)", request.form['month']))
+	elif 'authorID' in request.form:
+		return(db.getAllArticles(True, "authorID", request.form['authorID']))
 	else:
-		return str(db.getAllArticles(False, ""))
+		return str(db.getAllArticles(False, "", ""))
 
 
 @app.route('/getContributors', methods=['GET','POST'])

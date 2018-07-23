@@ -1,9 +1,1 @@
 INFO:werkzeug: * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-INFO:werkzeug:127.0.0.1 - - [21/Jul/2018 16:43:46] "GET / HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [21/Jul/2018 16:43:47] "GET /favicon.ico HTTP/1.1" 404 -
-INFO:werkzeug:127.0.0.1 - - [21/Jul/2018 16:44:00] "GET / HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [21/Jul/2018 16:44:09] "GET /getArticles HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [21/Jul/2018 16:44:14] "GET /getArticles HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [21/Jul/2018 16:44:16] "GET / HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [21/Jul/2018 16:55:15] "GET /getArticles HTTP/1.1" 200 -
-INFO:werkzeug:127.0.0.1 - - [21/Jul/2018 16:55:50] "GET /getArticles HTTP/1.1" 200 -

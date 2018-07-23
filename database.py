@@ -13,26 +13,25 @@ class database:
 	def __init__(self):
 		self.connect()
 
-	def getAllArticles(self, withLimitation, month):
+	def getAllArticles(self, withLimitation, limit, value):
 		self.connect()
 		sqlCommand = ""
 		imageSQLCommand = ""
 		sourcesSQLCommand = ""
 
 		if withLimitation:
-			sqlCommand = "SELECT a.*, c.firstName, c.lastName FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID WHERE MONTH(a.publishDate) = " + str(month)
-			imageSQLCommand = "SELECT a.articleID, i.paragraph, i.image FROM articles a INNER JOIN images i ON i.articleID = a.articleID WHERE MONTH(a.publishDate) = " + str(month)
-			sourcesSQLCommand = "SELECT a.articleID, s.sourceNumber, s.title, s.source FROM articles a INNER JOIN sources s ON a.articleID = s.articleID WHERE MONTH(a.publishDate) = " + str(month)
+			sqlCommand = "SELECT a.*, c.firstName, c.lastName, c.authorID FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID WHERE " + limit + " = " + str(value)
+			imageSQLCommand = "SELECT a.articleID, i.paragraph, i.image FROM articles a INNER JOIN images i ON i.articleID = a.articleID WHERE " + limit + " = " + str(value)
+			sourcesSQLCommand = "SELECT a.articleID, s.sourceNumber, s.title, s.source FROM articles a INNER JOIN sources s ON a.articleID = s.articleID WHERE " + limit + " = " + str(value)
 		else:
 			sqlCommand = "SELECT a.*, c.firstName, c.lastName FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID"
 			imageSQLCommand = "SELECT a.articleID, i.paragraph, i.image FROM articles a INNER JOIN images i ON i.articleID = a.articleID" 
 			sourcesSQLCommand = "SELECT a.articleID, s.sourceNumber, s.title, s.source FROM articles a INNER JOIN sources s ON a.articleID = s.articleID"
-
 		dict = JSONObject()
 		dict.articles = {}
 		self.cursor.execute(sqlCommand)
-		for (articleID, title, subTitle, text, upvotes, authorID, publishDate, type, fName, lName) in self.cursor:
-			newArticle = Article(articleID, title, text, str(publishDate), str(fName) + " " + str(lName), subTitle, upvotes, type)
+		for (articleID, title, subTitle, text, upvotes, authorID, publishDate, type, fName, lName, authorID) in self.cursor:
+			newArticle = Article(articleID, title, text, str(publishDate), str(fName) + " " + str(lName), subTitle, upvotes, type, authorID)
 			dict.articles[articleID] = newArticle
 
 		self.cursor.execute(imageSQLCommand)
@@ -54,7 +53,7 @@ class database:
 
 	def getArticleWithID(self, id):
 		self.connect()
-		sqlCommand = "SELECT a.*, c.firstName, c.lastName FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID WHERE a.articleID = " + str(id)
+		sqlCommand = "SELECT a.*, c.firstName, c.lastName, c.authorID FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID WHERE a.articleID = " + str(id)
 		self.cursor.execute(sqlCommand)
 		
 		rows = self.cursor.fetchall()
@@ -66,7 +65,7 @@ class database:
 		for a in rows:
 			c = a
 
-		article = Article(c[0], c[1], c[3], str(c[6]), str(c[8]) + " " + str(c[9]), c[2], c[4], c[7])
+		article = Article(c[0], c[1], c[3], str(c[6]), str(c[8]) + " " + str(c[9]), c[2], c[4], c[7], c[10])
 		imageSQLCommand = "SELECT a.articleID, i.paragraph, i.image FROM articles a INNER JOIN images i ON i.articleID = a.articleID WHERE a.articleID = " + str(id)
 		self.cursor.execute(imageSQLCommand)
 		for (id, imgP, img) in self.cursor:
