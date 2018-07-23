@@ -95,7 +95,7 @@ class database:
 			sqlCommand = "SELECT * FROM contributors"	
 			articleSQLCommand = "SELECT a.articleID, c.authorID FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID"
 		else:
-			sqlCommand = "SELECT * FROM contributors WHERE " + limit + " = '" + str(id) + "'"
+			sqlCommand = "SELECT * FROM contributors c WHERE " + limit + " = '" + str(id) + "'"
 			articleSQLCommand = "SELECT a.articleID, c.authorID FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID WHERE " + limit + " = '" + str(id) + "'"
 
 		self.cursor.execute(sqlCommand)
@@ -143,10 +143,10 @@ class database:
 
 	def addBio(self, id, bio):
 		self.connect()
-		sqlCommand = "UPDATE contributors SET bio = '" + bio + "' WHERE authorID = " + str(id)
+		sqlCommand = "UPDATE contributors c SET bio = '" + bio + "' WHERE c.authorID = " + str(id)
 		self.cursor.execute(sqlCommand)
 		self.cnx.commit()
-		return self.getContributors("authorID", id)
+		return self.getContributors("c.authorID", id)
 
 	def addImage(self, image):
 		self.connect()

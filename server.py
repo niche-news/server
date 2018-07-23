@@ -55,26 +55,26 @@ def getContributors():
 		return str(db.getContributors("", ""))
 	else:
 		if 'id' in request.form:
-			return str(db.getContributors("authorID", request.form['id']))
+			return str(db.getContributors("c.authorID", request.form['id']))
 		elif 'firstName' in request.form:
-			return str(db.getContributors("firstName", request.form['firstName']))
+			return str(db.getContributors("c.firstName", request.form['firstName']))
 		elif 'lastName' in request.form:
-			return str(db.getContributors("lastName", request.form['lastName']))
+			return str(db.getContributors("c.lastName", request.form['lastName']))
 		else:
 			return str(db.getContributors("", ""))			
 
 
 @app.route('/getContributors/id/<int:id>')
 def getContributorsWithID(id):
-	return str(db.getContributors("authorID", id))
+	return str(db.getContributors("c.authorID", id))
 
 @app.route('/getContributors/firstName/<firstName>')
 def getContributorsWithFirstName(firstName):
-	return str(db.getContributors("firstName", firstName))
+	return str(db.getContributors("c.firstName", firstName))
 
 @app.route('/getContributors/lastName/<lastName>')
 def getContributorsWithLastName(lastName):
-	return str(db.getContributors("lastName", lastName))
+	return str(db.getContributors("c.lastName", lastName))
 
 @app.route('/uploadArticle', methods=['POST'])
 def uploadArticle():
