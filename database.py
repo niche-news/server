@@ -90,10 +90,13 @@ class database:
 	def getContributors(self, limit, id):
 		self.connect()
 		sqlCommand = ""
+		articleSQLCommand = ""
 		if limit == "":
 			sqlCommand = "SELECT * FROM contributors"	
+			articleSQLCommand = "SELECT a.articleID, c.authorID FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID"
 		else:
 			sqlCommand = "SELECT * FROM contributors WHERE " + limit + " = '" + str(id) + "'"
+			articleSQLCommand = "SELECT a.articleID, c.authorID FROM articles a INNER JOIN contributors c ON a.authorID = c.authorID WHERE " + limit + " = '" + str(id) + "'"
 
 		self.cursor.execute(sqlCommand)
 		rows = self.cursor.fetchall()
@@ -101,18 +104,24 @@ class database:
 			return "No Results"
 
 		jsonDict = JSONObject()
-		jsonDict.contributors = []
+		jsonDict.contributors = {}
 
 		c = [0]
 		for i in rows:
 			c = i
 			if limit == "":
 				contributor = Contributor(c[0], c[1], c[2], c[3], c[4], c[5])
-				jsonDict.contributors.append(contributor)
+				jsonDict.contributors[c[0]] = contributor
 
 		if limit != "":
 			contributor = Contributor(c[0], c[1], c[2], c[3], c[4], c[5])
-			jsonDict.contributors.append(contributor)
+			jsonDict.contributors[c[0]] = contributor
+
+		self.cursor.execute(articleSQLCommand)
+		rows = self.cursor.fetchall()
+
+		for i in rows:
+			jsonDict.contributors[i[1]].articleIDs.append(i[0])
 
 		return jsonDict.toJSON()
 
